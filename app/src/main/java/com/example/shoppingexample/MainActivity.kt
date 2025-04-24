@@ -34,6 +34,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NavHostMain() {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = NAV_MAIN_ROUTE) {
+        composable(NAV_MAIN_ROUTE) {
+            MainScreen(navController)
+        }
+    }
 }
 
 
