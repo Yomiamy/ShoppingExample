@@ -39,10 +39,40 @@ const val NAV_MAIN_ROUTE = "/main"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavController) {
+    var input by remember { mutableStateOf("") }
     MaterialTheme {
         Scaffold(
             topBar = {
                 TopAppBar(
+                    title = {
+                        Row(
+                            modifier = Modifier
+                                .padding(start = 20.dp, end = 20.dp)
+                                .fillMaxWidth()
+                                .background(
+                                    shape = RoundedCornerShape(size = 30.dp),
+                                    color = Color_FFFFFF
+                                )
+                                .padding(horizontal = 5.dp, vertical = 2.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(android.R.drawable.ic_menu_search),
+                                contentDescription = ""
+                            )
+
+                            BasicTextField(
+                                value = input,
+                                singleLine = true,
+                                textStyle = TextStyle(fontSize = 18.sp),
+                                onValueChange = { input = it }
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        // 設置背景顏色
+                        containerColor = Color_008FDF
+                    )
                 )
             }
         ) { innerPadding ->
