@@ -1,0 +1,87 @@
+package com.example.shoppingexample.flow.detail
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.shoppingexample.R
+import com.example.shoppingexample.ui.theme.Color_008FDF
+import com.example.shoppingexample.ui.theme.Color_FFFFFF
+
+const val NAV_DETAIL_ROUTE = "/detail"
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailScreen(
+    navController: NavController,
+    martId: Int,
+    martName: String,
+    price: Int,
+    imageUrl: String
+) {
+    MaterialTheme {
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(
+                            stringResource(R.string.shopping_detail_toolbar_title),
+                            style = TextStyle(
+                                color = Color_FFFFFF,
+                                fontSize = 22.sp
+                            )
+                        )
+                    },
+                    navigationIcon = {
+                       Image(
+                           modifier = Modifier
+                               .padding(start = 20.dp)
+                               .size(30.dp)
+                               .clickable {
+                                   navController.navigateUp()
+                               },
+                           painter = painterResource(R.drawable.ic_back),
+                           contentDescription = ""
+                       )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        // 設置背景顏色
+                        containerColor = Color_008FDF
+                    )
+                )
+            }
+        ) { innerPadding ->
+            Box(modifier = Modifier.padding(innerPadding)) {
+                // TODO:
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DetailScreenPreview() {
+    val mockNavController = rememberNavController()
+    val mockMartId = 1255212
+    val mockMartName = "iPhone 12 Pro Max 256GB"
+    val mockPrice = 39950
+    val mockImageUrl= "https://pdinfo.senao.com.tw/octopus/contents/99b404a6bcfb4a74a27e4a10746fb258.jpg"
+    DetailScreen(mockNavController, mockMartId, mockMartName, mockPrice, mockImageUrl)
+}
