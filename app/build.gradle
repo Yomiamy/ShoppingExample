@@ -48,7 +48,14 @@ dependencies {
     implementation libs.androidx.material3
     implementation libs.navigation
     implementation libs.constraintlayout
+
+    // Glide圖片加載
     implementation libs.glide.compose
+
+    // 網路呼叫
+    implementation libs.retrofit
+    implementation libs.retrofit.gson
+    implementation libs.retrofit.scalars
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
