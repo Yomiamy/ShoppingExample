@@ -42,8 +42,9 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.shoppingexample.extension.noNullValue
 import com.example.shoppingexample.flow.detail.NAV_DETAIL_ROUTE
+import com.example.shoppingexample.flow.main.viewmodel.MainViewModel
+import org.koin.androidx.compose.koinViewModel
 import com.example.shoppingexample.model.ShoppingItemInfo
-import com.example.shoppingexample.model.ShoppingListInfo
 import com.example.shoppingexample.ui.theme.Color_000000
 import com.example.shoppingexample.ui.theme.Color_008FDF
 import com.example.shoppingexample.ui.theme.Color_C0C0C0
@@ -52,72 +53,12 @@ import com.example.shoppingexample.ui.theme.Color_FFFFFF
 
 const val NAV_MAIN_ROUTE = "/main"
 
-
-// TODO: 做到ViewMode
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavController) {
     var input by remember { mutableStateOf("") }
-    // TODO: Fake data
-    val mockShopList = ShoppingListInfo(
-        listOf(
-            ShoppingItemInfo(
-                price = 39950,
-                martShortName = "iPhone 12 Pro Max 256GB",
-                imageUrl = "https://pdinfo.senao.com.tw/octopus/contents/99b404a6bcfb4a74a27e4a10746fb258.jpg",
-                finalPrice = 39950,
-                martName = "iPhone 12 Pro Max 256GB【下殺97折 送保護貼兌換券】",
-                stockAvailable = 30,
-                martId = 1250797
-            ),
-            ShoppingItemInfo(
-                price = 36091,
-                martShortName = "iPhone 12 Pro 256GB",
-                imageUrl = "https://pdinfo.senao.com.tw/octopus/contents/ee507a92f31346a2a3d28dd5a899ff36.jpg",
-                finalPrice = 36091,
-                martName = "iPhone 12 Pro 256GB【下殺97折 送保護貼兌換券】",
-                stockAvailable = 17,
-                martId = 1255212
-            ),
-            ShoppingItemInfo(
-                price = 27930,
-                martShortName = "iPhone 12 128GB",
-                imageUrl = "https://pdinfo.senao.com.tw/octopus/contents/aa59e4bee3c24e57b2179d637b77919b.jpg",
-                finalPrice = 27930,
-                martName = "iPhone 12  128GB 紫色【新機預約 下殺98折 贈旅充】",
-                stockAvailable = 0,
-                martId = 1260924
-            ),
-            ShoppingItemInfo(
-                price = 27503,
-                martShortName = "iPhone 12 128GB",
-                imageUrl = "https://pdinfo.senao.com.tw/octopus/contents/aa59e4bee3c24e57b2179d637b77919b.jpg",
-                finalPrice = 27503,
-                martName = "iPhone 12  128GB 紫色【新機預約 下殺97折 送保護貼兌換券】",
-                stockAvailable = 0,
-                martId = 1260800
-            ),
-            ShoppingItemInfo(
-                price = 37142,
-                martShortName = "iPhone 12 Pro Max 128GB",
-                imageUrl = "https://pdinfo.senao.com.tw/octopus/contents/c10cf98092c04407944f5938013cc6e6.jpg",
-                finalPrice = 37142,
-                martName = "iPhone 12 Pro Max 128GB【下殺98折 送保護貼兌換券】",
-                stockAvailable = 6,
-                martId = 1248853
-            ),
-            ShoppingItemInfo(
-                price = 33900,
-                martShortName = "iPhone 12 Pro 128GB",
-                imageUrl = "https://pdinfo.senao.com.tw/octopus/contents/838434c68e234109adb592edbd1f90d0.jpg",
-                finalPrice = 33900,
-                martName = "iPhone 12 Pro 128GB【送保護貼兌換券】",
-                stockAvailable = 19,
-                martId = 1244286
-            )
-        )
-    )
+    val mainViewModel: MainViewModel = koinViewModel()
+    val uiState = mainViewModel.uiState.value
 
     MaterialTheme {
         Scaffold(
@@ -139,31 +80,45 @@ fun MainScreen(navController: NavController) {
                 )
             }
         ) { innerPadding ->
-            LazyColumn(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-                    .background(Color_C0C0C0)
-            ) {
-                items(mockShopList.data.orEmpty()) { shopItemInfo ->
-                    ShopItemLayout(
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(top = 5.dp, start = 5.dp, end = 5.dp)
-                            .background(Color_FFFFFF, shape = RoundedCornerShape(5.dp)),
-                        shopItemInfo
+            if(uiState is MainScreenUiState.GetShoppingListState) {
+                if(uiState.isSuccess) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .background(Color_C0C0C0)
                     ) {
-                        navController.navigate(
-                            "$NAV_DETAIL_ROUTE?martId=${shopItemInfo.martId}&martName=${shopItemInfo.martName}&price=${shopItemInfo.price}&imageUrl=${shopItemInfo.imageUrl}"
-                        )
+                        items(uiState.shoppingList) { shopItemInfo ->
+                            ShopItemLayout(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 5.dp, start = 5.dp, end = 5.dp)
+                                    .background(Color_FFFFFF, shape = RoundedCornerShape(5.dp)),
+                                shopItemInfo
+                            ) {
+                                navController.navigate(
+                                    "$NAV_DETAIL_ROUTE?martId=${shopItemInfo.martId}&martName=${shopItemInfo.martName}&price=${shopItemInfo.price}&imageUrl=${shopItemInfo.imageUrl}"
+                                )
+                            }
+                        }
                     }
+                } else {
+                    Text(
+                        uiState.msg,
+                        modifier = Modifier.padding(top = 10.dp),
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            color = Color_000000,
+                            fontSize = 20.sp
+                        )
+                    )
                 }
             }
         }
     }
 
     LaunchedEffect(Unit) {
-        // TODO: 加載資料
+        mainViewModel.getShopListInfo(input)
     }
 }
 
@@ -219,7 +174,7 @@ fun ShopItemLayout(
             contentDescription = ""
         )
 
-        Text(shoppingItemInfo.martName.noNullValue,
+        Text(shoppingItemInfo.martNameDispStr,
             modifier = Modifier
                 .padding(top = 10.dp, start = 15.dp, end = 10.dp)
                 .constrainAs(martNameTxt) {
