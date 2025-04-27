@@ -3,6 +3,7 @@ package com.example.shoppingexample.flow.main.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -103,15 +104,17 @@ fun MainScreen(navController: NavController) {
                         }
                     }
                 } else {
-                    Text(
-                        uiState.msg,
-                        modifier = Modifier.padding(top = 10.dp),
-                        style = TextStyle(
-                            fontWeight = FontWeight.Bold,
-                            color = Color_000000,
-                            fontSize = 20.sp
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        Text(
+                            uiState.msg,
+                            modifier = Modifier.padding(10.dp),
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                color = Color_000000,
+                                fontSize = 20.sp
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
