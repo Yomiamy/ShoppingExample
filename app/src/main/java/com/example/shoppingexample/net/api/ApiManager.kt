@@ -19,21 +19,18 @@ object ApiManager {
     private var sApiInstance: IApi? = null
     private val sLock = Any()
 
-    fun buildAPI(context: Context): IApi = synchronized(sLock) {
+    fun buildAPI(): IApi = synchronized(sLock) {
         if(sApiInstance != null) {
             return sApiInstance!!
         }
 
-        sApiInstance = createApiInstance(context, IApi::class.java)
+        sApiInstance = createApiInstance(IApi::class.java)
 
         return sApiInstance!!
     }
 
 
-    private fun <T> createApiInstance(
-        context: Context,
-        apiClz: Class<T>
-    ): T {
+    private fun <T> createApiInstance(apiClz: Class<T>): T {
         val builder = Builder()
             .connectTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
             .readTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)

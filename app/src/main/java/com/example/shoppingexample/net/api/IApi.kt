@@ -10,5 +10,5 @@ interface IApi {
      * Get shopping list
      */
     @GET("/apis2/test/marttest.jsp")
-    suspend fun getShoppingList(): Response<ShoppingListInfo?>
+    suspend fun getShoppingListInfo(): Response<ShoppingListInfo?>
 }
