@@ -41,6 +41,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.shoppingexample.extension.noNullValue
+import com.example.shoppingexample.flow.detail.NAV_DETAIL_ROUTE
 import com.example.shoppingexample.model.ShoppingItemInfo
 import com.example.shoppingexample.model.ShoppingListInfo
 import com.example.shoppingexample.ui.theme.Color_000000
@@ -50,6 +51,9 @@ import com.example.shoppingexample.ui.theme.Color_C25782
 import com.example.shoppingexample.ui.theme.Color_FFFFFF
 
 const val NAV_MAIN_ROUTE = "/main"
+
+
+// TODO: 做到ViewMode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -149,7 +153,9 @@ fun MainScreen(navController: NavController) {
                             .background(Color_FFFFFF, shape = RoundedCornerShape(5.dp)),
                         shopItemInfo
                     ) {
-                        // TODO: 項目點擊
+                        navController.navigate(
+                            "$NAV_DETAIL_ROUTE?martId=${shopItemInfo.martId}&martName=${shopItemInfo.martName}&price=${shopItemInfo.price}&imageUrl=${shopItemInfo.imageUrl}"
+                        )
                     }
                 }
             }
