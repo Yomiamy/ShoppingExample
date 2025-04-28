@@ -37,7 +37,7 @@ fun NavHostMain() {
         }
 
         composable(
-            route = "$NAV_DETAIL_ROUTE?martId={martId}&martName={martName}&price={price}&imageUrl={imageUrl}",
+            route = "$NAV_DETAIL_ROUTE?martId={martId}&martName={martName}&priceDispText={priceDispText}&imageUrl={imageUrl}",
             arguments = listOf(
                 navArgument(name = "martId") {
                     type = NavType.IntType
@@ -47,9 +47,9 @@ fun NavHostMain() {
                     type = NavType.StringType
                     defaultValue = ""
                 },
-                navArgument(name = "price") {
-                    type = NavType.IntType
-                    defaultValue = -1
+                navArgument(name = "priceDispText") {
+                    type = NavType.StringType
+                    defaultValue = ""
                 },
                 navArgument(name = "imageUrl") {
                     type = NavType.StringType
@@ -59,9 +59,9 @@ fun NavHostMain() {
         ) {
             val martId = it.arguments?.getInt("martId").noNullValue
             val martName = it.arguments?.getString("martName").noNullValue
-            val price = it.arguments?.getInt("price").noNullValue
+            val priceDispText = it.arguments?.getString("priceDispText").noNullValue
             val imageUrl= it.arguments?.getString("imageUrl").noNullValue
-            DetailScreen(navController, martId, martName, price, imageUrl)
+            DetailScreen(navController, martId, martName, priceDispText, imageUrl)
         }
     }
 }

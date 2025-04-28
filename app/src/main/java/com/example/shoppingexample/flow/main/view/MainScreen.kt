@@ -108,7 +108,7 @@ fun MainScreen(navController: NavController) {
                                 shopItemInfo
                             ) {
                                 navController.navigate(
-                                    "$NAV_DETAIL_ROUTE?martId=${shopItemInfo.martId}&martName=${shopItemInfo.martName}&price=${shopItemInfo.price}&imageUrl=${shopItemInfo.imageUrl}"
+                                    "$NAV_DETAIL_ROUTE?martId=${shopItemInfo.martId}&martName=${shopItemInfo.martName}&priceDispText=${shopItemInfo.finalPriceDispStr}&imageUrl=${shopItemInfo.imageUrl}"
                                 )
                             }
                         }
