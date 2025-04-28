@@ -27,11 +27,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,6 +46,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.example.shoppingexample.extension.buildHighlightedString
 import com.example.shoppingexample.extension.noNullValue
 import com.example.shoppingexample.flow.detail.NAV_DETAIL_ROUTE
 import com.example.shoppingexample.flow.main.viewmodel.MainViewModel
@@ -71,7 +77,10 @@ fun MainScreen(navController: NavController) {
                                 .padding(horizontal = 20.dp)
                                 .fillMaxWidth(),
                             input,
-                            { input = it }
+                            {
+                                input = it
+                                mainViewModel.getShopListInfo(it)
+                            }
                         )
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -95,6 +104,7 @@ fun MainScreen(navController: NavController) {
                                     .fillMaxWidth()
                                     .padding(top = 5.dp, start = 5.dp, end = 5.dp)
                                     .background(Color_FFFFFF, shape = RoundedCornerShape(5.dp)),
+                                input,
                                 shopItemInfo
                             ) {
                                 navController.navigate(
@@ -155,6 +165,7 @@ fun SearchBarLayout(modifier: Modifier, input: String, onSearchTextChanged: (Str
 @Composable
 fun ShopItemLayout(
     modifier: Modifier,
+    keyword: String,
     shoppingItemInfo: ShoppingItemInfo,
     onItemClick: () -> Unit
 ) {
@@ -177,7 +188,7 @@ fun ShopItemLayout(
             contentDescription = ""
         )
 
-        Text(shoppingItemInfo.martNameDispStr,
+        Text(shoppingItemInfo.martNameDispStr.buildHighlightedString(keyword),
             modifier = Modifier
                 .padding(top = 10.dp, start = 15.dp, end = 10.dp)
                 .constrainAs(martNameTxt) {
@@ -190,7 +201,8 @@ fun ShopItemLayout(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis)
 
-        Text(shoppingItemInfo.finalPriceDispStr.noNullValue,
+        Text(
+            shoppingItemInfo.finalPriceDispStr.buildHighlightedString(keyword),
             modifier = Modifier
                 .padding(top = 10.dp, start = 15.dp)
                 .constrainAs(finalPriceTxt) {
