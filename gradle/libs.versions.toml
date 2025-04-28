@@ -17,6 +17,9 @@ retrofit = "2.11.0"
 retrofit_gson = "2.11.0"
 retrofit_scalars = "2.11.0"
 
+koin-android = "4.0.0-RC1"
+koin-compose = "3.5.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -40,6 +43,9 @@ glide-compose = { group = "com.github.bumptech.glide", name = "compose", version
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit_gson" }
 retrofit-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit_scalars" }
+
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin-android" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin-compose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

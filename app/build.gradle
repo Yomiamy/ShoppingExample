@@ -57,6 +57,10 @@ dependencies {
     implementation libs.retrofit.gson
     implementation libs.retrofit.scalars
 
+    // 依賴注入
+    // implementation libs.koin.android
+    implementation libs.koin.compose
+
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
