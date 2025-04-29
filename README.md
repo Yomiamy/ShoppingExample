@@ -13,6 +13,6 @@ An Android app built with **Jetpack Compose** to display a shopping list with ke
 
 ## 📸 Screenshots
 
-| Product List | Highlighted Search |
-|--------------|--------------------|
-| ![List](preview1.png) | ![Search](preview2.png) |
+| Product List | Highlighted Search | Product Detail |
+|--------------|--------------------|--------------------|
+|![List](https://github.com/Yomiamy/ShoppingExample/blob/feature/readme/photos/Screenshot_1.png?raw=true)|![Search](https://github.com/Yomiamy/ShoppingExample/blob/feature/readme/photos/Screenshot_2.png?raw=true)|![Detail](https://github.com/Yomiamy/ShoppingExample/blob/feature/readme/photos/Screenshot_3.png?raw=true)|
