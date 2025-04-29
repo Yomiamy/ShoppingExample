@@ -41,7 +41,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.shoppingexample.component.Loading
+import com.example.shoppingexample.component.CenteredLoading
 import com.example.shoppingexample.extension.buildHighlightedString
 import com.example.shoppingexample.extension.noNullValue
 import com.example.shoppingexample.flow.detail.NAV_DETAIL_ROUTE
@@ -122,14 +122,7 @@ fun MainScreen(navController: NavController) {
                     }
                 }
             } else if(uiState is MainScreenUiState.Loading) {
-                Box(
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .fillMaxSize(), // 填滿螢幕
-                    contentAlignment = Alignment.Center // 重點：置中
-                ) {
-                    Loading()
-                }
+                CenteredLoading()
             }
         }
     }
