@@ -3,7 +3,7 @@ package com.example.shoppingexample.flow.main.view
 import com.example.shoppingexample.model.ShoppingItemInfo
 
 sealed class MainScreenUiState {
-    data class Loading(val isLoading: Boolean): MainScreenUiState()
+    object Loading: MainScreenUiState()
 
     data class GetShoppingListState(
         val isSuccess: Boolean = true,

@@ -28,6 +28,8 @@ class MainViewModel(
 
     fun getShopListInfo(keyword: String) {
         viewModelScope.launch {
+            mUiState.value = MainScreenUiState.Loading
+
             if(keyword.isEmpty() && mShoppingList.isEmpty()) {
                 try {
                     val response = mApiRepository.getShopListInfo()
