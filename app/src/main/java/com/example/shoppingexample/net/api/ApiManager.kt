@@ -1,6 +1,5 @@
 package com.example.shoppingexample.net.api
 
-import android.content.Context
 import com.example.shoppingexample.net.Constants
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder

@@ -33,7 +33,6 @@ import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.shoppingexample.R
-import com.example.shoppingexample.extension.noNullValue
 import com.example.shoppingexample.ui.theme.Color_000000
 import com.example.shoppingexample.ui.theme.Color_008FDF
 import com.example.shoppingexample.ui.theme.Color_C0C0C0
