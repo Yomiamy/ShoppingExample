@@ -1,5 +1,6 @@
 package com.example.shoppingexample.flow.main.view
 
+import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,7 +43,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.shoppingexample.component.CenteredLoading
-import com.example.shoppingexample.extension.buildHighlightedString
+import com.example.shoppingexample.component.HighlightedText
 import com.example.shoppingexample.extension.noNullValue
 import com.example.shoppingexample.flow.detail.NAV_DETAIL_ROUTE
 import com.example.shoppingexample.flow.main.viewmodel.MainViewModel
@@ -145,7 +146,7 @@ fun SearchBarLayout(modifier: Modifier, input: String, onSearchTextChanged: (Str
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(android.R.drawable.ic_menu_search),
+            painter = painterResource(R.drawable.ic_menu_search),
             contentDescription = ""
         )
 
@@ -185,7 +186,7 @@ fun ShopItemLayout(
             contentDescription = ""
         )
 
-        Text(shoppingItemInfo.martNameDispStr.buildHighlightedString(keyword),
+        HighlightedText(
             modifier = Modifier
                 .padding(top = 10.dp, start = 15.dp, end = 10.dp)
                 .constrainAs(martNameTxt) {
@@ -194,12 +195,26 @@ fun ShopItemLayout(
                     end.linkTo(parent.end)
                     width = Dimension.fillToConstraints
                 },
-            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color_000000),
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis)
+            text = shoppingItemInfo.martNameDispStr,
+            keyword = keyword,
+            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color_000000)
+        )
 
-        Text(
-            shoppingItemInfo.finalPriceDispStr.buildHighlightedString(keyword),
+        HighlightedText(
+            modifier = Modifier
+                .padding(top = 10.dp, start = 15.dp, end = 10.dp)
+                .constrainAs(martNameTxt) {
+                    top.linkTo(parent.top)
+                    start.linkTo(image.end)
+                    end.linkTo(parent.end)
+                    width = Dimension.fillToConstraints
+                },
+            text = shoppingItemInfo.martNameDispStr,
+            keyword = keyword,
+            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color_000000)
+        )
+
+        HighlightedText(
             modifier = Modifier
                 .padding(top = 10.dp, start = 15.dp)
                 .constrainAs(finalPriceTxt) {
@@ -208,7 +223,10 @@ fun ShopItemLayout(
                     end.linkTo(martNameTxt.end)
                     width = Dimension.fillToConstraints
                 },
-            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color_C25782))
+            text = shoppingItemInfo.finalPriceDispStr,
+            keyword = keyword,
+            style =  TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color_C25782)
+        )
 
         Row(modifier = Modifier
             .padding(bottom = 10.dp, end = 10.dp)
@@ -218,13 +236,13 @@ fun ShopItemLayout(
             }) {
             // Favorite
             Image(
-                painter = painterResource(android.R.drawable.ic_input_add),
+                painter = painterResource(R.drawable.ic_input_add),
                 contentDescription = ""
             )
 
             // ShopCart
             Image(
-                painter = painterResource(android.R.drawable.btn_star_big_on),
+                painter = painterResource(R.drawable.btn_star_big_on),
                 contentDescription = ""
             )
         }
