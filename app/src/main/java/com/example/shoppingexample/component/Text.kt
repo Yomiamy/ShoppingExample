@@ -22,18 +22,28 @@ fun HighlightedText(
     Text(
         modifier = modifier,
         text = buildAnnotatedString {
-            if (keyword.isEmpty()) {
-                append(text)
-            } else {
-                val parts = text.split(keyword)
-                for (i in parts.indices) {
-                    append(parts[i])
-                    if (i != parts.size - 1) {
-                        withStyle(SpanStyle(color = color)) {
-                            append(keyword)
-                        }
-                    }
+            var currentIndex = 0
+
+            while (currentIndex < text.length) {
+                val foundIndex = text.indexOf(keyword, currentIndex, true)
+
+                if (foundIndex == -1 || keyword.isEmpty()) {
+                    // 無關鍵字存在, 附加原始字並結束建構
+                    append(text.substring(currentIndex))
+                    break
                 }
+
+                // 先加關鍵字前的字
+                if (foundIndex > currentIndex) {
+                    append(text.substring(currentIndex, foundIndex))
+                }
+
+                // 加高亮字
+                withStyle(SpanStyle(color = color)) {
+                    append(text.substring(foundIndex, foundIndex + keyword.length))
+                }
+
+                currentIndex = foundIndex + keyword.length
             }
         },
         style = style,
