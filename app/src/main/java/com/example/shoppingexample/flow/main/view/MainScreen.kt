@@ -71,12 +71,11 @@ fun MainScreen(navController: NavController) {
                             Modifier
                                 .padding(horizontal = 20.dp)
                                 .fillMaxWidth(),
-                            input,
-                            {
-                                input = it
-                                mainViewModel.getShopListInfo(it)
-                            }
-                        )
+                            input
+                        ) {
+                            input = it
+                            mainViewModel.getShopListInfo(it)
+                        }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         // 設置背景顏色
