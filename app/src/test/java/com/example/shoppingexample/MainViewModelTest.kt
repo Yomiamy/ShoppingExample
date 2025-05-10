@@ -50,5 +50,32 @@ class MainViewModelTest {
         Dispatchers.resetMain()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun getShopListInfo() = runTest {
+        // Arrange
+        coEvery { fakeRepo.getShopListInfo() } returns Response.success(ShoppingListInfo(listOf(
+            ShoppingItemInfo(
+                price = 100,
+                martName = "Test Store",
+                martShortName = "Test Store",
+                imageUrl = "",
+                finalPrice = 100,
+                stockAvailable = 100,
+                martId = 100
+
+            )
+        )))
+
+        // Action
+
+        mMainViewModel.getShopListInfo("")
+        advanceUntilIdle() // 等待 coroutine 結束
+
+        // Assertion
+        val state: MainScreenUiState.GetShoppingListState = mMainViewModel.uiState.value as MainScreenUiState.GetShoppingListState
+        assertTrue(state.isSuccess)
+        assertTrue(state.shoppingList.isNotEmpty())
+    }
 
 }
