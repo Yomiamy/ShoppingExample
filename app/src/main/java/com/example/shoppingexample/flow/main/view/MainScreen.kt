@@ -202,20 +202,6 @@ fun ShopItemLayout(
 
         HighlightedText(
             modifier = Modifier
-                .padding(top = 10.dp, start = 15.dp, end = 10.dp)
-                .constrainAs(martNameTxt) {
-                    top.linkTo(parent.top)
-                    start.linkTo(image.end)
-                    end.linkTo(parent.end)
-                    width = Dimension.fillToConstraints
-                },
-            text = shoppingItemInfo.martNameDispStr,
-            keyword = keyword,
-            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color_000000)
-        )
-
-        HighlightedText(
-            modifier = Modifier
                 .padding(top = 10.dp, start = 15.dp)
                 .constrainAs(finalPriceTxt) {
                     top.linkTo(martNameTxt.bottom)
