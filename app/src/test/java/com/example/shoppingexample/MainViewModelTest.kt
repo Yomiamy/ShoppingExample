@@ -78,4 +78,21 @@ class MainViewModelTest {
         assertTrue(state.shoppingList.isNotEmpty())
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun getShopListInfoFail() = runTest {
+        // Arrange
+        coEvery { fakeRepo.getShopListInfo() } returns Response.error(HttpURLConnection.HTTP_BAD_REQUEST, okhttp3.ResponseBody.create(null, ""))
+
+        // Action
+
+        mMainViewModel.getShopListInfo("")
+        advanceUntilIdle() // 等待 coroutine 結束
+
+        // Assertion
+        val state: MainScreenUiState.GetShoppingListState = mMainViewModel.uiState.value as MainScreenUiState.GetShoppingListState
+        assertFalse(state.isSuccess)
+        assertTrue(state.shoppingList.isEmpty())
+    }
+
 }
